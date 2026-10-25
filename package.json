@@ -1,0 +1,34 @@
+{
+  "name": "hbplus-auth",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm install && npx expo install --fix",
+    "start": "expo start",
+    "web": "expo start --web",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "build:web": "expo export --platform web",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "*",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-navigation/native": "*",
+    "@react-navigation/native-stack": "*",
+    "expo": "*",
+    "expo-auth-session": "*",
+    "expo-crypto": "*",
+    "expo-status-bar": "*",
+    "expo-web-browser": "*",
+    "firebase": "*",
+    "firebase-admin": "*",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-screens": "*",
+    "react-native-web": "*"
+  }
+}

@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Third layer of domain enforcement.
+// NOTE: the domain is written into the regex below. If you change
+// ALLOWED_DOMAIN for testing, change it here too and re-deploy the rules.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isCompanyUser() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.matches('.*@hbplus[.]fit');
+    }
+
+    // A user may read only their own profile. Nobody can write from a client:
+    // profiles and roles are written exclusively by the Netlify Functions
+    // (firebase-admin bypasses these rules), so a user can never promote
+    // themselves to admin.
+    match /users/{uid} {
+      allow read: if isCompanyUser() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Everything else is denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
