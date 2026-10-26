@@ -50,11 +50,7 @@ async function authenticate(event) {
   try {
     decoded = await getAdmin().auth().verifyIdToken(token);
   } catch (err) {
-    console.error(
-      'Firebase token verification failed:',
-      err.code,
-      err.message
-    );
+    console.error('Firebase token verification failed:', err.stack || err);
 
     return {
       ok: false,
