@@ -24,12 +24,16 @@
     "expo-status-bar": "*",
     "expo-web-browser": "*",
     "firebase": "*",
-    "firebase-admin": "*",
+    "firebase-admin": "^12.7.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-native": "*",
     "react-native-safe-area-context": "*",
     "react-native-screens": "*",
     "react-native-web": "*"
+  },
+  "overrides": {
+    "jwks-rsa": "3.1.0",
+    "jose": "^4.15.9"
   }
 }

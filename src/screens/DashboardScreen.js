@@ -17,7 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import AdminUsersPanel from '../components/AdminUsersPanel';
 import BackgroundVideo from '../components/BackgroundVideo';
-import BrandLogo from '../components/BrandLogo';
+import BrandLogo from '../components/Brand';
 import { colors, font, radius, spacing } from '../theme';
 
 const SUPPORT_EMAIL = 'info@hbplus.fit';
