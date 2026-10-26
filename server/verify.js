@@ -45,13 +45,27 @@ async function authenticate(event) {
     };
   }
 
- 
+  // Server setup problems (missing env vars, bad private key, bundling issues)
+  // are NOT the user's fault, so they must not be reported as "invalid token".
+  let auth;
+  try {
+    auth = getAdmin().auth();
+  } catch (err) {
+    console.error('Firebase Admin setup failed:', err.message, err.stack || '');
+    return {
+      ok: false,
+      response: json(500, {
+        code: 'server_misconfigured',
+        message: 'Server is not configured correctly.',
+      }),
+    };
+  }
+
   let decoded;
   try {
-    decoded = await getAdmin().auth().verifyIdToken(token);
+    decoded = await auth.verifyIdToken(token);
   } catch (err) {
-    console.error('Firebase token verification failed:', err.stack || err);
-
+    console.error('Token verification failed:', err.code, err.message);
     return {
       ok: false,
       response: json(401, {
@@ -60,7 +74,6 @@ async function authenticate(event) {
       }),
     };
   }
-
 
   const viaGoogle = decoded.firebase && decoded.firebase.sign_in_provider === 'google.com';
   const domains = parseAllowedDomains(process.env.ALLOWED_DOMAIN || 'hbplus.fit');

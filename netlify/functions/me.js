@@ -31,7 +31,7 @@ exports.handler = async (event) => {
     const FieldValue = admin.firestore.FieldValue;
 
     const email = decoded.email.toLowerCase();
-    const adminEmails = parseAllowedDomains(process.env.ADMIN_EMAILS); // same lower-case/comma parser
+    const adminEmails = parseAllowedDomains(process.env.ADMIN_EMAILS || ''); // same lower-case/comma parser
     const shouldBeAdmin = adminEmails.includes(email);
 
     const ref = db.collection('users').doc(decoded.uid);
