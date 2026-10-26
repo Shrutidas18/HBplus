@@ -45,15 +45,26 @@ async function authenticate(event) {
     };
   }
 
+ 
   let decoded;
   try {
     decoded = await getAdmin().auth().verifyIdToken(token);
   } catch (err) {
+    console.error(
+      'Firebase token verification failed:',
+      err.code,
+      err.message
+    );
+
     return {
       ok: false,
-      response: json(401, { code: 'invalid_token', message: 'Invalid or expired token.' }),
+      response: json(401, {
+        code: 'invalid_token',
+        message: 'Invalid or expired token.',
+      }),
     };
   }
+
 
   const viaGoogle = decoded.firebase && decoded.firebase.sign_in_provider === 'google.com';
   const domains = parseAllowedDomains(process.env.ALLOWED_DOMAIN || 'hbplus.fit');
